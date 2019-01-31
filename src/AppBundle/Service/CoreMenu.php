@@ -44,10 +44,10 @@ class CoreMenu implements MenuBuilderInterface
             $menu1 = new MenuItem();
             $menu1
                 ->setName('user')
-                ->setRouteName('frontpage')
+                ->setRouteName('user_list')
                 ->setCaption('menu.user')
                 ->setDescription('menu.user.detail')
-                ->setIcon('tools')
+                ->setIcon('users')
                 ->setPriority(9000);
 
             $root[] = $menu1;

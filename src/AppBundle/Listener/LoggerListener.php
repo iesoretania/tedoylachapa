@@ -59,7 +59,7 @@ class LoggerListener implements EventSubscriberInterface
     {
         if ($event->isMasterRequest()) {
             $user = $this->token->getToken() ? $this->token->getToken()->getUser() : null;
-            $user = is_string($user) ? null : $user;
+            $user = $user instanceof User ? $user->getLoginUsername() : $user;
 
             $ip = $event->getRequest()->getClientIp();
             $eventName = EventLog::ACCESS;
@@ -73,24 +73,24 @@ class LoggerListener implements EventSubscriberInterface
     {
         /** @var User $user */
         $user = $event->getAuthenticationToken()->getUser();
+        $user = $user instanceof User ? $user->getLoginUsername() : $user;
 
         $ip = $event->getRequest()->getClientIp();
         $eventName = EventLog::LOGIN_SUCCESS;
-        $data = $user->getLoginUsername();
 
-        $this->createLogEntry($eventName, $user, $ip, $data);
+        $this->createLogEntry($eventName, $user, $ip);
     }
 
     public function onSecuritySwitchUser(SwitchUserEvent $event)
     {
         /** @var User $user */
         $user = $event->getTargetUser();
+        $user = $user instanceof User ? $user->getLoginUsername() : $user;
 
         $ip = $event->getRequest()->getClientIp();
         $eventName = EventLog::SWITCH_USER;
-        $data = $event->getTargetUser()->getLoginUsername();
 
-        $this->createLogEntry($eventName, $user, $ip, $data);
+        $this->createLogEntry($eventName, $user, $ip);
     }
 
 
@@ -98,6 +98,7 @@ class LoggerListener implements EventSubscriberInterface
     {
         /** @var User $user */
         $user = $event->getAuthenticationToken()->getUser();
+        $user = $user instanceof User ? $user->getLoginUsername() : $user;
 
         $ip = $this->requestStack->getMasterRequest()->getClientIp();
         $eventName = EventLog::LOGIN_ERROR;
@@ -118,12 +119,12 @@ class LoggerListener implements EventSubscriberInterface
 
     /**
      * @param $eventName
-     * @param User $user
+     * @param $user
      * @param $ip
      * @param $data
      * @throws \Exception
      */
-    private function createLogEntry($eventName, User $user = null, $ip = null, $data = null)
+    private function createLogEntry($eventName, $user = null, $ip = null, $data = null)
     {
         $em = $this->managerRegistry->getManager();
         $logEntry = new EventLog();

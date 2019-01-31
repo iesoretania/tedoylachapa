@@ -87,29 +87,28 @@ class UserType extends AbstractType
             /** @var User $data */
             $data = $event->getData();
 
-            if (!$options['new']) {
+            if (!$options['new'] && $options['admin']) {
                 $builder
                     ->add('submit', SubmitType::class, [
                         'label' => 'form.save',
                         'attr' => ['class' => 'btn btn-success']
                     ]);
-
-                if ($options['own']) {
-                    $builder
-                        ->add('oldPassword', PasswordType::class, [
-                            'label' => 'form.old_password',
-                            'required' => false,
-                            'mapped' => false,
-                            'constraints' => [
-                                new UserPassword([
-                                    'groups' => ['password']
-                                ]),
-                                new NotBlank([
-                                    'groups' => ['password']
-                                ])
-                            ]
-                        ]);
-                }
+            }
+            if (!$options['new'] && $options['own']) {
+                $builder
+                    ->add('oldPassword', PasswordType::class, [
+                        'label' => 'form.old_password',
+                        'required' => false,
+                        'mapped' => false,
+                        'constraints' => [
+                            new UserPassword([
+                                'groups' => ['password']
+                            ]),
+                            new NotBlank([
+                                'groups' => ['password']
+                            ])
+                        ]
+                    ]);
             }
 
             if ($options['admin'] || $options['own']) {

@@ -71,8 +71,8 @@ class EventLog
     private $dataAttachment;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @var User
+     * @ORM\Column(type="string", nullable=true, length=255)
+     * @var string
      */
     private $user;
 
@@ -175,7 +175,7 @@ class EventLog
     }
 
     /**
-     * @return User
+     * @return string
      */
     public function getUser()
     {
@@ -183,10 +183,10 @@ class EventLog
     }
 
     /**
-     * @param User|null $user
+     * @param string $user
      * @return EventLog
      */
-    public function setUser(User $user = null)
+    public function setUser($user)
     {
         $this->user = $user;
         return $this;
