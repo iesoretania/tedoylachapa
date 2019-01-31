@@ -1,0 +1,47 @@
+form.user_name: Nombre de usuario
+form.first_name: Nombre
+form.last_name: Apellidos
+form.enabled: Acceso
+form.enabled.no: El acceso a la aplicación le está denegado
+form.enabled.yes: El acceso a la aplicación le está permitido
+form.administrator: El usuario puede administrar la aplicación
+
+form.disconnect: Salir de la aplicación
+
+form.save: Guardar cambios
+form.delete: Eliminar usuarios seleccionados
+form.back: Volver
+form.impersonate: Acceder como el usuario
+form.delete_confirm: Confirmar borrado
+
+prompt.delete_confirm: |
+  ¿Está seguro de que desea eliminar los siguientes usuarios? En el caso de que alguno de ellos tenga elementos asociados en algún centro, el borrado no tendrá lugar.
+
+  Esta operación no se puede deshacer.
+
+form.old_password: Contraseña actual
+form.new_password: Nueva contraseña
+form.new_password_repeat: Repetir contraseña
+form.change_password: Guardar cambios y cambiar la contraseña
+
+message.saved: Datos personales actualizados con éxito.
+message.password_changed: Datos personales y contraseña actualizados con éxito.
+message.error: No se han podido actualizar los datos personales.
+message.deleted: Los usuarios seleccionados han sido eliminados con éxito.
+message.delete_error: No se han podido eliminar los usuarios seleccionados.
+
+title.new: Nuevo usuario
+title.edit: Datos del usuario
+title.delete: Eliminar usuarios
+
+title.list: Listado de usuarios
+table.total: "{1} Encontrado un único resultado|]1,Inf[ Encontrados %count% resultados"
+table.no_users: No hay usuarios
+table.new: Nuevo usuario
+table.filter: Filtrar...
+
+header.username: Usuario
+header.name: Nombre completo
+header.last_login: Últ. conexión
+
+role.administrator: Administrador

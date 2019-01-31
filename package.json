@@ -1,0 +1,41 @@
+{
+  "name": "tedoylachapa",
+  "version": "1.0.0",
+  "description": "Aplicación web para gestión de la empresa del programa Innicia del I.E.S. Oretania. Curso 2018/2019",
+  "dependencies": {},
+  "scripts": {
+    "test": "phpunit -c app/"
+  },
+  "author": "Luis Ramón López López",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iesoretania/tedoylachapa.git"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.6.3",
+    "@symfony/webpack-encore": "^0.21.1",
+    "autoprefixer": "^9.4.4",
+    "bootstrap": "^4.2.1",
+    "bootswatch": "^4.2.1",
+    "jquery": "^3.3.1",
+    "lodash.debounce": "^4.0.8",
+    "node-sass": "^4.11.0",
+    "popper.js": "^1.14.6",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.0.3",
+    "select2": "^4.0.6-rc.1",
+    "select2-theme-bootstrap4": "^0.2.0-beta.2",
+    "webpack-notifier": "^1.7.0"
+  },
+  "browserslist": [
+    "Android 2.3",
+    "Android >= 4",
+    "Chrome >= 20",
+    "Firefox >= 3.6",
+    "Explorer >= 8",
+    "iOS >= 6",
+    "Opera >= 12",
+    "Safari >= 6"
+  ]
+}

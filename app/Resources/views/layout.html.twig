@@ -1,0 +1,78 @@
+{% trans_default_domain 'layout' %}
+{% extends 'base.html.twig' %}
+{% import 'layout/macros_layout.html.twig' as ml %}
+
+{% block title %}
+    {% if title is defined and title is not empty %}
+        {{ title }} -
+    {% endif %}
+    {{ app_name }}
+{%- endblock %}
+
+{% block body %}
+
+    <nav class="navbar navbar-dark navbar-expand-md sticky-top bg-dark">
+        <a class="navbar-brand" href="{{ path('frontpage') }}">{{ app_name }}</a>
+        <span class="nav-text ml-auto mr-0 text-light">
+            {{ 'user.logged.as'|trans({'%user%': app.user}, 'layout') }}
+        </span>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('logout') }}"><i class="fas fa-power-off"></i> {{ 'user.logout'|trans({}, 'layout') }}</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container-fluid">
+    <div class="row">
+
+        {% include 'layout/partial_sidebar.html.twig' %}
+
+        <main role="main" class="col-md-10 ml-sm-auto pt-3 px-4">
+            <ol class="breadcrumb">
+                {% set last_url = "" %}
+                {% for menu_item in menu_extension.pathByRouteName(menu_path|default(app.request.get('_route'))) %}
+                    <li class="breadcrumb-item">
+                    {% if not loop.last or (breadcrumb is defined and breadcrumb) %}{% set last_url = path(menu_item.routeName, menu_item.routeParams) %}<a href="{{ last_url }}" class="breadcrumb-link">{% endif %}
+                    {%- if menu_item.icon %}<i class="fa fa-{{ menu_item.icon }}"></i> {% endif -%}
+                    {%- if not loop.first and menu_item.caption %}{% if menu_item.icon %}<span class="hidden-xs hidden-sm">{% endif %}{{- menu_item.caption|trans({}, 'menu') -}}{% if menu_item.icon %}</span>{% endif %}{% endif %}
+                    {%- if loop.first %}<span class="hidden-xs hidden-sm">{{- 'menu.frontpage'|trans({}, 'menu') -}}</span>{% endif %}
+                    {% if not loop.last or (breadcrumb is defined and breadcrumb) %}</a>{% endif %}
+                    </li>
+                {%- endfor -%}
+                {% for item in breadcrumb|default([]) %}
+                    <li class="breadcrumb-item active">
+                        {%- if item.routeName is defined %}{% set last_url = path(item.routeName, item.routeParams ?: {}) %}<a href="{{ last_url }}" class="breadcrumb-link">{% endif -%}
+                            {%- if item.icon is defined %}<i class="fa fa-{{ item.icon }}"></i> {% endif -%}
+                            {%- if item.caption is defined %}{{- item.caption|trans({}, 'menu') -}}{% endif %}{{- item.fixed|default('') -}}
+                            {%- if item.routeName is defined %}</a>{% endif -%}
+                    </li>
+                {%- endfor %}
+            </ol>
+
+            {% block content_header %}
+                {% if title is defined and (show_title is not defined or show_title == true) %}
+                    <h1 class="well">{{ title }}</h1>
+                {% endif %}
+                {% include 'layout/partial_flash.html.twig' %}
+            {% endblock %}
+            {% if menu ?? false %}
+                {% include 'layout/partial_menu.html.twig' %}
+            {% endif %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</div>
+
+<div class="container">
+</div>
+<footer class="footer no-print" role="contentinfo">
+    <div class="container">
+        {% block footer %}
+            <p class="text-muted">
+                &copy; 2018{% if 'now'|date('Y')>2018 %}-{{ 'now'|date('Y') }}{% endif %}, Luis Ramón López López
+            </p>
+        {% endblock %}
+    </div>
+</footer>
+{% endblock %}
