@@ -87,5 +87,6 @@ sensio_framework_extra:
 simple_things_entity_audit:
     audited_entities:
         - AppBundle\Entity\User
+        - AppBundle\Entity\Reference
     global_ignore_columns:
         - last_access
