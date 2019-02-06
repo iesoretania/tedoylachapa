@@ -24,9 +24,15 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 
 class ReferenceRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    /**
+     * @var ReferenceReceptionRepository
+     */
+    private $referenceReceptionRepository;
+
+    public function __construct(ManagerRegistry $registry, ReferenceReceptionRepository $referenceReceptionRepository)
     {
         parent::__construct($registry, Reference::class);
+        $this->referenceReceptionRepository = $referenceReceptionRepository;
     }
 
     /**
@@ -50,6 +56,11 @@ class ReferenceRepository extends ServiceEntityRepository
     {
         // se hace así en lugar de en bloque para que pueda auditarse el borrado
         foreach ($list as $item) {
+            // borrar el historial de entrada de material
+            $referenceReceptions = $this->referenceReceptionRepository->findBy(['reference' => $item]);
+            foreach ($referenceReceptions as $referenceReception) {
+                $this->getEntityManager()->remove($referenceReception);
+            }
             $this->getEntityManager()->remove($item);
         }
     }
