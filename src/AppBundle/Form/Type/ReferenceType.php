@@ -21,6 +21,7 @@ namespace AppBundle\Form\Type;
 use AppBundle\Entity\Reference;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -45,6 +46,10 @@ class ReferenceType extends AbstractType
             ->add('price', MoneyType::class, [
                 'label' => 'form.price',
                 'divisor' => 100,
+                'required' => true
+            ])
+            ->add('stock', IntegerType::class, [
+                'label' => 'form.stock',
                 'required' => true
             ])
             ->add('active', ChoiceType::class, [

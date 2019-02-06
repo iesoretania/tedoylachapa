@@ -15,6 +15,7 @@
                         <th>{{ 'header.code'|trans }}</label></th>
                         <th>{{ 'header.description'|trans }}</th>
                         <th>{{ 'header.price'|trans }}</th>
+                        <th>{{ 'header.stock'|trans }}</th>
                         <th>{{ 'header.active'|trans }}</th>
                     </tr>
                 </thead>
@@ -26,6 +27,9 @@
                             <td>
                                 {{ (item.price/100)|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
                                 {{ 'format.currency'|trans({}, 'general') }}
+                            </td>
+                            <td>
+                                {{ item.stock }}
                             </td>
                             <td>
                                 {{ (item.active ? 'table.active.yes' : 'table.active.no')|trans }}

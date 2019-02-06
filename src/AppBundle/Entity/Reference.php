@@ -20,6 +20,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -53,6 +54,13 @@ class Reference
      * @var int
      */
     private $price;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=0)
+     * @var int
+     */
+    private $stock;
 
     /**
      * @ORM\Column(type="boolean")
@@ -124,6 +132,24 @@ class Reference
     public function setPrice($price)
     {
         $this->price = $price;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    /**
+     * @param int $stock
+     * @return Reference
+     */
+    public function setStock($stock)
+    {
+        $this->stock = $stock;
         return $this;
     }
 

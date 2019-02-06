@@ -8,6 +8,7 @@
     <th><label><input type="checkbox" id="select"> {{ 'header.code'|trans }}</label></th>
     <th>{{ 'header.description'|trans }}</th>
     <th>{{ 'header.price'|trans }}</th>
+    <th>{{ 'header.stock'|trans }}</th>
     <th>{{ 'header.active'|trans }}</th>
 {% endblock %}
 
@@ -26,12 +27,15 @@
                         {{ 'format.currency'|trans({}, 'general') }}
                     </td>
                     <td>
+                        {{ reference.stock }}
+                    </td>
+                    <td>
                         {{ (reference.active ? 'table.active.yes' : 'table.active.no')|trans }}
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="4">{{ 'table.no_items'|trans }}</td>
+                    <td colspan="5">{{ 'table.no_items'|trans }}</td>
                 </tr>
             {% endfor %}
 {% endblock %}

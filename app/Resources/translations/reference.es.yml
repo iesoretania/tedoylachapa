@@ -1,6 +1,7 @@
 form.code: Código
 form.description: Descripción
 form.price: Precio
+form.stock: Stock
 form.active: Activo
 form.active.no: No se puede utilizar en nuevos pedidos
 form.active.yes: Se puede añadir a pedidos nuevos
@@ -33,6 +34,7 @@ table.filter: Filtrar...
 header.code: Código
 header.description: Descripción
 header.price: Precio
+header.stock: Stock
 header.active: ¿Activa?
 
 table.active.yes: Sí
