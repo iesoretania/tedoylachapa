@@ -6,6 +6,7 @@ form.added_by: Registrada por
 form.description: Detalle del proceso de entrada
 
 form.save: Guardar cambios
+form.save_and_repeat: Guardar cambios y registrar otra entrada
 form.delete: Eliminar entradas seleccionadas
 form.back: Volver
 form.delete_confirm: Confirmar borrado

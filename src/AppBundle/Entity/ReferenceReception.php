@@ -38,7 +38,7 @@ class ReferenceReception
     /**
      * @ORM\ManyToOne(targetEntity="Reference")
      * @ORM\JoinColumn(nullable=false)
-     * @var Model
+     * @var Reference
      */
     private $reference;
 
@@ -76,7 +76,7 @@ class ReferenceReception
     }
 
     /**
-     * @return ReferenceReception
+     * @return Reference
      */
     public function getReference()
     {

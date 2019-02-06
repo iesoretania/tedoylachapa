@@ -77,8 +77,9 @@ class ReferenceReceptionController extends Controller
                     );
                 }
                 $em->flush();
+                $routeName = $request->get('submit-repeat', null) === '' ? 'reference_reception_form_new' : 'reference_reception';
                 $this->addFlash('success', $translator->trans('message.saved', [], 'reference_reception'));
-                return $this->redirectToRoute('reference_reception');
+                return $this->redirectToRoute($routeName);
             } catch (\Exception $e) {
                 $this->addFlash('error', $translator->trans('message.error', [], 'reference_reception'));
             }
@@ -97,6 +98,7 @@ class ReferenceReceptionController extends Controller
             'menu_path' => 'reference',
             'breadcrumb' => $breadcrumb,
             'title' => $title,
+            'reference_reception' => $referenceReception,
             'form' => $form->createView()
         ]);
     }

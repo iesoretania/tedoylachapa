@@ -7,6 +7,9 @@
     {{ m.start_button() }}
         {{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}
         {{ m.submit_button('submit', 'check', 'btn-success', 'form.save'|trans) }}
+        {% if not reference_reception.id %}
+            {{ m.submit_button('submit-repeat', 'check-double', 'btn-success', 'form.save_and_repeat'|trans) }}
+        {% endif %}
     {{ m.end_button() }}
     {{ form_end(form) }}
 {% endblock %}
