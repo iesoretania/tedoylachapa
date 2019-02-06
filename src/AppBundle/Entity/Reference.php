@@ -63,6 +63,13 @@ class Reference
     private $stock;
 
     /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=0)
+     * @var int
+     */
+    private $minimumStock;
+
+    /**
      * @ORM\Column(type="boolean")
      * @var bool
      */
@@ -150,6 +157,24 @@ class Reference
     public function setStock($stock)
     {
         $this->stock = $stock;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinimumStock()
+    {
+        return $this->minimumStock;
+    }
+
+    /**
+     * @param int $minimumStock
+     * @return Reference
+     */
+    public function setMinimumStock($minimumStock)
+    {
+        $this->minimumStock = $minimumStock;
         return $this;
     }
 

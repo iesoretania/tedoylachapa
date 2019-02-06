@@ -2,6 +2,7 @@ form.code: Código
 form.description: Descripción
 form.price: Precio
 form.stock: Stock
+form.minimum_stock: Stock mínimo
 form.active: Activo
 form.active.no: No se puede utilizar en nuevos pedidos
 form.active.yes: Se puede añadir a pedidos nuevos
@@ -35,6 +36,7 @@ header.code: Código
 header.description: Descripción
 header.price: Precio
 header.stock: Stock
+header.minimum_stock: Stock mínimo
 header.active: ¿Activa?
 
 table.active.yes: Sí

@@ -52,6 +52,10 @@ class ReferenceType extends AbstractType
                 'label' => 'form.stock',
                 'required' => true
             ])
+            ->add('minimumStock', IntegerType::class, [
+                'label' => 'form.minimum_stock',
+                'required' => true
+            ])
             ->add('active', ChoiceType::class, [
                 'label' => 'form.active',
                 'required' => true,

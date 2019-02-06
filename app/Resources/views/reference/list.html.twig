@@ -9,15 +9,17 @@
     <th>{{ 'header.description'|trans }}</th>
     <th>{{ 'header.price'|trans }}</th>
     <th>{{ 'header.stock'|trans }}</th>
+    <th>{{ 'header.minimum_stock'|trans }}</th>
     <th>{{ 'header.active'|trans }}</th>
 {% endblock %}
 
 {% block table_body %}
             {% for reference in pager %}
                 {% set url = path('reference_form_edit', {'code': reference.code}) %}
-                <tr class="clickable-row" data-href="{{ url }}">
+                <tr class="clickable-row{% if reference.stock <= reference.minimumStock %} text-danger{% endif %}" data-href="{{ url }}">
                     <td>
                         <label><input type="checkbox" name="items[]" value="{{ reference.id }}" class="selectable"> <a href="{{ url }}">{{ reference.code }}</a></label>
+                        {% if reference.stock <= reference.minimumStock %} <i class="fas fa-exclamation-triangle"></i>{% endif %}
                     </td>
                     <td>
                         {{ reference.description }}
@@ -30,12 +32,15 @@
                         {{ reference.stock }}
                     </td>
                     <td>
+                        {{ reference.minimumStock }}
+                    </td>
+                    <td>
                         {{ (reference.active ? 'table.active.yes' : 'table.active.no')|trans }}
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="5">{{ 'table.no_items'|trans }}</td>
+                    <td colspan="6">{{ 'table.no_items'|trans }}</td>
                 </tr>
             {% endfor %}
 {% endblock %}
