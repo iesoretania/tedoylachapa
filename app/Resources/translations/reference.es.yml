@@ -1,0 +1,39 @@
+form.code: Código
+form.description: Descripción
+form.price: Precio
+form.active: Activo
+form.active.no: No se puede utilizar en nuevos pedidos
+form.active.yes: Se puede añadir a pedidos nuevos
+
+form.save: Guardar cambios
+form.delete: Eliminar referencias seleccionadas
+form.back: Volver
+form.delete_confirm: Confirmar borrado
+
+prompt.delete_confirm: |
+  ¿Está seguro de que desea eliminar las siguientes referencias?
+
+  Esta operación no se puede deshacer.
+
+message.saved: Datos actualizados con éxito.
+message.error: No se han podido guardar los cambios.
+message.deleted: Las referencias han sido eliminadas con éxito.
+message.delete_error: No se han podido eliminar las referencias seleccionadas.
+
+title.new: Nueva referencia
+title.edit: Detalles de la referencia
+title.delete: Eliminar referencias
+
+title.list: Listado de referencias
+table.total: "{1} Encontrado un único resultado|]1,Inf[ Encontrados %count% resultados"
+table.no_items: No hay referencias
+table.new: Nueva referencia
+table.filter: Filtrar...
+
+header.code: Código
+header.description: Descripción
+header.price: Precio
+header.active: ¿Activa?
+
+table.active.yes: Sí
+table.active.no: No

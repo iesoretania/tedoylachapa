@@ -19,10 +19,12 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="reference")
+ * @UniqueEntity("code")
  */
 class Reference
 {
@@ -57,6 +59,11 @@ class Reference
      * @var bool
      */
     private $active;
+
+    public function __construct()
+    {
+        $this->active = true;
+    }
 
     /**
      * @return int

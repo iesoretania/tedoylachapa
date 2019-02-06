@@ -51,6 +51,17 @@ class CoreMenu implements MenuBuilderInterface
                 ->setPriority(9000);
 
             $root[] = $menu1;
+
+            $menu1 = new MenuItem();
+            $menu1
+                ->setName('reference')
+                ->setRouteName('reference_list')
+                ->setCaption('menu.reference')
+                ->setDescription('menu.reference.detail')
+                ->setIcon('boxes')
+                ->setPriority(8000);
+
+            $root[] = $menu1;
         }
 
         $menu = new MenuItem();

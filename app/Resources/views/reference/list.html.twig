@@ -1,0 +1,48 @@
+{% trans_default_domain 'reference' %}
+{% extends 'generic/list.html.twig' %}
+{% import 'macros.html.twig' as m %}
+
+{% block path_new %}{{ path('reference_form_new') }}{% endblock %}
+
+{% block table_header %}
+    <th><label><input type="checkbox" id="select"> {{ 'header.code'|trans }}</label></th>
+    <th>{{ 'header.description'|trans }}</th>
+    <th>{{ 'header.price'|trans }}</th>
+    <th>{{ 'header.active'|trans }}</th>
+{% endblock %}
+
+{% block table_body %}
+            {% for reference in pager %}
+                {% set url = path('reference_form_edit', {'code': reference.code}) %}
+                <tr class="clickable-row" data-href="{{ url }}">
+                    <td>
+                        <label><input type="checkbox" name="items[]" value="{{ reference.id }}" class="selectable"> <a href="{{ url }}">{{ reference.code }}</a></label>
+                    </td>
+                    <td>
+                        {{ reference.description }}
+                    </td>
+                    <td>
+                        {{ (reference.price/100)|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
+                        {{ 'format.currency'|trans({}, 'general') }}
+                    </td>
+                    <td>
+                        {{ (reference.active ? 'table.active.yes' : 'table.active.no')|trans }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">{{ 'table.no_items'|trans }}</td>
+                </tr>
+            {% endfor %}
+{% endblock %}
+
+{% block before_table %}
+    <form action="{{ path('reference_delete') }}" method="post">
+{% endblock %}
+
+{% block after_table %}
+        <div class="clearfix"></div>
+        {{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}
+        {{ m.submit_button('delete', 'trash', 'btn-danger enable-on-items', 'form.delete'|trans) }}
+    </form>
+{% endblock %}

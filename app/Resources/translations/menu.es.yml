@@ -4,6 +4,9 @@ menu.sections: Secciones
 menu.user: Usuarios
 menu.user.detail: Administrar usuarios de la aplicación
 
+menu.reference: Referencias
+menu.reference.detail: Gestionar las referencias de la empresa
+
 menu.personal_data: Datos personales
 menu.personal_data.detail: Modificar los datos personales
 
