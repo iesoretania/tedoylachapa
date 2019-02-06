@@ -89,6 +89,6 @@ simple_things_entity_audit:
         - AppBundle\Entity\User
         - AppBundle\Entity\Reference
         - AppBundle\Entity\Model
-        - AppBundle\Entity\ModelReception
+        - AppBundle\Entity\ReferenceReception
     global_ignore_columns:
         - last_access
