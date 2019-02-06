@@ -1,0 +1,39 @@
+form.code: Código
+form.description: Descripción
+form.image: Cambiar imagen
+form.active: Activo
+form.active.no: No se puede utilizar en nuevos pedidos
+form.active.yes: Se puede añadir a pedidos nuevos
+
+form.save: Guardar cambios
+form.delete: Eliminar modelos seleccionados
+form.back: Volver
+form.delete_confirm: Confirmar borrado
+
+prompt.delete_confirm: |
+  ¿Está seguro de que desea eliminar los siguientes modelos?
+
+  Esta operación no se puede deshacer.
+
+message.saved: Datos actualizados con éxito.
+message.error: No se han podido guardar los cambios.
+message.deleted: Los modelos han sido eliminadas con éxito.
+message.delete_error: No se han podido eliminar los modelos seleccionados.
+
+title.new: Nuevo modelo
+title.edit: Detalles del modelo
+title.delete: Eliminar modelos
+
+title.list: Listado de modelos
+table.total: "{1} Encontrado un único resultado|]1,Inf[ Encontrados %count% resultados"
+table.no_items: No hay modelos
+table.new: Nuevo modelo
+table.filter: Filtrar...
+
+header.code: Código
+header.description: Descripción
+header.image: Imagen
+header.active: ¿Activo?
+
+table.active.yes: Sí
+table.active.no: No

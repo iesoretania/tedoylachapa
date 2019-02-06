@@ -88,5 +88,6 @@ simple_things_entity_audit:
     audited_entities:
         - AppBundle\Entity\User
         - AppBundle\Entity\Reference
+        - AppBundle\Entity\Model
     global_ignore_columns:
         - last_access
