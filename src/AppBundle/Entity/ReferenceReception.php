@@ -19,15 +19,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="model_reception")
- * @UniqueEntity("code")
+ * @ORM\Table(name="reference_reception")
  */
-class ModelReception
+class ReferenceReception
 {
     /**
      * @ORM\Id
@@ -38,11 +36,11 @@ class ModelReception
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Model")
+     * @ORM\ManyToOne(targetEntity="Reference")
      * @ORM\JoinColumn(nullable=false)
      * @var Model
      */
-    private $model;
+    private $reference;
 
     /**
      * @ORM\Column(type="string")
@@ -78,20 +76,20 @@ class ModelReception
     }
 
     /**
-     * @return Model
+     * @return Reference
      */
-    public function getModel()
+    public function getReference()
     {
-        return $this->model;
+        return $this->reference;
     }
 
     /**
-     * @param Model $model
-     * @return ModelReception
+     * @param Reference $reference
+     * @return ReferenceReception
      */
-    public function setModel($model)
+    public function setReference($reference)
     {
-        $this->model = $model;
+        $this->reference = $reference;
         return $this;
     }
 
@@ -105,7 +103,7 @@ class ModelReception
 
     /**
      * @param string $addedBy
-     * @return ModelReception
+     * @return ReferenceReception
      */
     public function setAddedBy($addedBy)
     {
@@ -123,7 +121,7 @@ class ModelReception
 
     /**
      * @param int $quantity
-     * @return ModelReception
+     * @return ReferenceReception
      */
     public function setQuantity($quantity)
     {
@@ -141,7 +139,7 @@ class ModelReception
 
     /**
      * @param \DateTime $date
-     * @return ModelReception
+     * @return ReferenceReception
      */
     public function setDate($date)
     {
@@ -159,7 +157,7 @@ class ModelReception
 
     /**
      * @param string $description
-     * @return ModelReception
+     * @return ReferenceReception
      */
     public function setDescription($description)
     {
