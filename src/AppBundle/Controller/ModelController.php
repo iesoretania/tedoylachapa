@@ -84,10 +84,9 @@ class ModelController extends Controller
                 }
                 $em->flush();
                 $this->addFlash('success', $translator->trans('message.saved', [], 'model'));
-                return $this->redirectToRoute('model_list');
+                return $this->redirectToRoute('model');
             } catch (\Exception $e) {
                 $this->addFlash('error', $translator->trans('message.error', [], 'model'));
-                throw $e;
             }
         }
 
@@ -100,7 +99,7 @@ class ModelController extends Controller
         ];
 
         return $this->render('model/form.html.twig', [
-            'menu_path' => 'model_list',
+            'menu_path' => 'model',
             'breadcrumb' => $breadcrumb,
             'title' => $title,
             'model' => $model,
@@ -109,7 +108,7 @@ class ModelController extends Controller
     }
 
     /**
-     * @Route("/listar/{page}", name="model_list", requirements={"page" = "\d+"},
+     * @Route("/listar/{page}", name="model", requirements={"page" = "\d+"},
      *     defaults={"page" = "1"}, methods={"GET"})
      */
     public function listAction(TranslatorInterface $translator, Request $request, $page)
@@ -158,7 +157,7 @@ class ModelController extends Controller
 
         $items = $request->request->get('items', []);
         if (count($items) === 0) {
-            return $this->redirectToRoute('model_list');
+            return $this->redirectToRoute('model');
         }
 
         $items = $modelRepository->findAllInListById($items);
@@ -172,12 +171,12 @@ class ModelController extends Controller
             } catch (\Exception $e) {
                 $this->addFlash('error', $translator->trans('message.delete_error', [], 'model'));
             }
-            return $this->redirectToRoute('model_list');
+            return $this->redirectToRoute('model');
         }
 
         $title = $translator->trans('title.delete', [], 'model');
         return $this->render('model/delete.html.twig', [
-            'menu_path' => 'model_list',
+            'menu_path' => 'model',
             'breadcrumb' => [['fixed' => $title]],
             'title' => $title,
             'items' => $items

@@ -63,7 +63,7 @@ class ReferenceController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('success', $translator->trans('message.saved', [], 'reference'));
-                return $this->redirectToRoute('reference_list');
+                return $this->redirectToRoute('reference');
             } catch (\Exception $e) {
                 $this->addFlash('error', $translator->trans('message.error', [], 'reference'));
             }
@@ -78,7 +78,7 @@ class ReferenceController extends Controller
         ];
 
         return $this->render('reference/form.html.twig', [
-            'menu_path' => 'reference_list',
+            'menu_path' => 'reference',
             'breadcrumb' => $breadcrumb,
             'title' => $title,
             'form' => $form->createView()
@@ -86,7 +86,7 @@ class ReferenceController extends Controller
     }
 
     /**
-     * @Route("/listar/{page}", name="reference_list", requirements={"page" = "\d+"},
+     * @Route("/listar/{page}", name="reference", requirements={"page" = "\d+"},
      *     defaults={"page" = "1"}, methods={"GET"})
      */
     public function listAction(TranslatorInterface $translator, Request $request, $page)
@@ -138,7 +138,7 @@ class ReferenceController extends Controller
 
         $items = $request->request->get('items', []);
         if (count($items) === 0) {
-            return $this->redirectToRoute('reference_list');
+            return $this->redirectToRoute('reference');
         }
 
         $items = $referenceRepository->findAllInListById($items);
@@ -152,12 +152,12 @@ class ReferenceController extends Controller
             } catch (\Exception $e) {
                 $this->addFlash('error', $translator->trans('message.delete_error', [], 'reference'));
             }
-            return $this->redirectToRoute('reference_list');
+            return $this->redirectToRoute('reference');
         }
 
         $title = $translator->trans('title.delete', [], 'reference');
         return $this->render('reference/delete.html.twig', [
-            'menu_path' => 'reference_list',
+            'menu_path' => 'reference',
             'breadcrumb' => [['fixed' => $title]],
             'title' => $title,
             'items' => $items

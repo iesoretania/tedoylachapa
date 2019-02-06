@@ -64,7 +64,7 @@ class UserController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('success', $message);
-                return $this->redirectToRoute('user_list');
+                return $this->redirectToRoute('user');
             } catch (\Exception $e) {
                 $this->addFlash('error', $translator->trans('message.error', [], 'user'));
             }
@@ -79,7 +79,7 @@ class UserController extends Controller
         ];
 
         return $this->render('user/form.html.twig', [
-            'menu_path' => 'user_list',
+            'menu_path' => 'user',
             'breadcrumb' => $breadcrumb,
             'title' => $title,
             'form' => $form->createView(),
@@ -88,7 +88,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/listar/{page}", name="user_list", requirements={"page" = "\d+"},
+     * @Route("/listar/{page}", name="user", requirements={"page" = "\d+"},
      *     defaults={"page" = "1"}, methods={"GET"})
      */
     public function listAction(TranslatorInterface $translator, Request $request, $page)
@@ -141,7 +141,7 @@ class UserController extends Controller
 
         $items = $request->request->get('users', []);
         if (count($items) === 0) {
-            return $this->redirectToRoute('user_list');
+            return $this->redirectToRoute('user');
         }
 
         $users = $queryBuilder
@@ -170,11 +170,11 @@ class UserController extends Controller
             } catch (\Exception $e) {
                 $this->addFlash('error', $translator->trans('message.delete_error', [], 'user'));
             }
-            return $this->redirectToRoute('user_list');
+            return $this->redirectToRoute('user');
         }
 
         return $this->render('user/delete.html.twig', [
-            'menu_path' => 'user_list',
+            'menu_path' => 'user',
             'breadcrumb' => [['fixed' => $translator->trans('title.delete', [], 'user')]],
             'title' => $translator->trans('title.delete', [], 'user'),
             'users' => $users

@@ -44,7 +44,7 @@ class CoreMenu implements MenuBuilderInterface
             $menu1 = new MenuItem();
             $menu1
                 ->setName('user')
-                ->setRouteName('user_list')
+                ->setRouteName('user')
                 ->setCaption('menu.user')
                 ->setDescription('menu.user.detail')
                 ->setIcon('users')
@@ -55,7 +55,7 @@ class CoreMenu implements MenuBuilderInterface
             $menu1 = new MenuItem();
             $menu1
                 ->setName('reference')
-                ->setRouteName('reference_list')
+                ->setRouteName('reference')
                 ->setCaption('menu.reference')
                 ->setDescription('menu.reference.detail')
                 ->setIcon('boxes')
@@ -66,7 +66,7 @@ class CoreMenu implements MenuBuilderInterface
             $menu1 = new MenuItem();
             $menu1
                 ->setName('model')
-                ->setRouteName('model_list')
+                ->setRouteName('model')
                 ->setCaption('menu.model')
                 ->setDescription('menu.model.detail')
                 ->setIcon('image')
