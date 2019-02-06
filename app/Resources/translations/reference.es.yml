@@ -12,6 +12,8 @@ form.delete: Eliminar referencias seleccionadas
 form.back: Volver
 form.delete_confirm: Confirmar borrado
 
+form.reception: Entrada de material
+
 prompt.delete_confirm: |
   ¿Está seguro de que desea eliminar las siguientes referencias?
 

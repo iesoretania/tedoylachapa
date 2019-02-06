@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ReferenceReceptionRepository")
  * @ORM\Table(name="reference_reception")
  */
 class ReferenceReception
@@ -76,7 +76,7 @@ class ReferenceReception
     }
 
     /**
-     * @return Reference
+     * @return ReferenceReception
      */
     public function getReference()
     {

@@ -23,7 +23,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ReferenceRepository")
  * @ORM\Table(name="reference")
  * @UniqueEntity("code")
  */
@@ -79,6 +79,12 @@ class Reference
     {
         $this->active = true;
     }
+
+    public function __toString()
+    {
+        return $this->getCode() . ' - ' . $this->getDescription();
+    }
+
 
     /**
      * @return int

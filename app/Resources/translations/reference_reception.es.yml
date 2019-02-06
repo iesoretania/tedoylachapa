@@ -1,0 +1,37 @@
+form.date: Fecha de entrada
+form.reference: Referencia
+form.select_reference: Seleccione una referencia
+form.quantity: Unidades
+form.added_by: Registrada por
+form.description: Detalle del proceso de entrada
+
+form.save: Guardar cambios
+form.delete: Eliminar entradas seleccionadas
+form.back: Volver
+form.delete_confirm: Confirmar borrado
+
+prompt.delete_confirm: |
+  ¿Está seguro de que desea eliminar las recepciones de las siguientes referencias? Se descontarán las unidades recibidas en el stock de la referencia.
+
+  Esta operación no se puede deshacer.
+
+message.saved: Stock actualizado con éxito.
+message.error: No se han podido guardar los cambios.
+message.deleted: Los datos han sido eliminados con éxito.
+message.delete_error: No se han podido eliminar los datos seleccionados.
+
+title.new: Nueva entrada
+title.edit: Detalles de la entrada
+title.delete: Eliminar entradas
+
+title.list: Listado de entradas de material
+table.total: "{1} Encontrado un único resultado|]1,Inf[ Encontrados %count% resultados"
+table.no_items: No hay entradas
+table.new: Nueva entrada
+table.filter: Filtrar...
+
+header.date: Fecha de entrada
+header.reference: Referencia
+header.quantity: Cantidad
+header.added_by: Registrada por
+header.description: Descripción

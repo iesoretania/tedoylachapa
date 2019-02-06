@@ -133,9 +133,6 @@ class ReferenceController extends Controller
     ) {
         $em = $this->getDoctrine()->getManager();
 
-        /** @var QueryBuilder $queryBuilder */
-        $queryBuilder = $em->createQueryBuilder();
-
         $items = $request->request->get('items', []);
         if (count($items) === 0) {
             return $this->redirectToRoute('reference');

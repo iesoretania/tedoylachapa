@@ -1,0 +1,51 @@
+{% trans_default_domain 'reference_reception' %}
+{% extends 'generic/list.html.twig' %}
+{% import 'macros.html.twig' as m %}
+
+{% block path_new %}{{ path('reference_reception_form_new') }}{% endblock %}
+
+{% block table_header %}
+    <th><label><input type="checkbox" id="select"> {{ 'header.date'|trans }}</label></th>
+    <th>{{ 'header.reference'|trans }}</th>
+    <th>{{ 'header.quantity'|trans }}</th>
+    <th>{{ 'header.added_by'|trans }}</th>
+    <th>{{ 'header.description'|trans }}</th>
+{% endblock %}
+
+{% block table_body %}
+            {% for reference_reception in pager %}
+                {% set url = path('reference_reception_form_edit', {'id': reference_reception.id}) %}
+                <tr class="clickable-row" data-href="{{ url }}">
+                    <td>
+                        <label><input type="checkbox" name="items[]" value="{{ reference_reception.id }}" class="selectable"> <a href="{{ url }}">{{ reference_reception.date|date('format.date'|trans({}, 'general')) }}</a></label>
+                    </td>
+                    <td>
+                        {{ reference_reception.reference }}
+                    </td>
+                    <td>
+                        {{ reference_reception.quantity }}
+                    </td>
+                    <td>
+                        {{ reference_reception.addedBy }}
+                    </td>
+                    <td>
+                        {{ reference_reception.description }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">{{ 'table.no_items'|trans }}</td>
+                </tr>
+            {% endfor %}
+{% endblock %}
+
+{% block before_table %}
+    <form action="{{ path('reference_reception_delete') }}" method="post">
+{% endblock %}
+
+{% block after_table %}
+        <div class="clearfix"></div>
+        {{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}
+        {{ m.submit_button('delete', 'trash', 'btn-danger enable-on-items', 'form.delete'|trans) }}
+    </form>
+{% endblock %}
