@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InvoiceLineRepository")
  * @ORM\Table(name="invoice_line")
- * @UniqueEntity({"invoice", "order"})
+ * @UniqueEntity({"invoice", "orderNr"})
  */
 class InvoiceLine
 {
@@ -41,7 +41,7 @@ class InvoiceLine
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $order;
+    private $orderNr;
 
     /**
      * @ORM\Column(type="string")
@@ -99,18 +99,18 @@ class InvoiceLine
     /**
      * @return int
      */
-    public function getOrder()
+    public function getOrderNr()
     {
-        return $this->order;
+        return $this->orderNr;
     }
 
     /**
-     * @param int $order
+     * @param int $orderNr
      * @return InvoiceLine
      */
-    public function setOrder($order)
+    public function setOrderNr($orderNr)
     {
-        $this->order = $order;
+        $this->orderNr = $orderNr;
         return $this;
     }
 

@@ -37,7 +37,7 @@ class InvoiceLineRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('il')
             ->where('il.id IN (:items)')
             ->setParameter('items', $items)
-            ->orderBy('il.order')
+            ->orderBy('il.order_nr')
             ->getQuery()
             ->getResult();
     }

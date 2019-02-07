@@ -85,7 +85,6 @@ class Reference
         return $this->getCode() . ' - ' . $this->getDescription();
     }
 
-
     /**
      * @return int
      */

@@ -1,0 +1,83 @@
+{% trans_default_domain 'invoice' %}
+{% extends 'layout.html.twig' %}
+{% import 'macros.html.twig' as m %}
+{% block content %}
+
+    {{ form_start(form) }}
+    {% if not new %}
+        {{ form_widget(form) }}
+
+        <table id="list" class="table table-bordered table-hover table-striped table-sm">
+            <thead>
+            <tr>
+                <th>{{ 'header.line.code'|trans }}</th>
+                <th>{{ 'header.line.reference'|trans }}</th>
+                <th>{{ 'header.line.model'|trans }}</th>
+                <th>{{ 'header.line.description'|trans }}</th>
+                <th>{{ 'header.line.rate'|trans }}</th>
+                <th>{{ 'header.line.quantity'|trans }}</th>
+                <th>{{ 'header.line.discount'|trans }}</th>
+                <th>{{ 'header.line.total'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% set total = 0 %}
+                {% for invoice_line in invoice.lines %}
+                    <tr>
+                        <td>{{ invoice_line.reference ? (invoice_line.reference.code ~ (invoice_line.model ? invoice_line.model.code)) }}</td>
+                        <td>{% if invoice_line.reference %}{{ invoice_line.reference.description }}{% endif %}</td>
+                        <td>{% if invoice_line.model %}{{ invoice_line.model.description }}{% endif %}</td>
+                        <td>
+                            {{ invoice_line.description }}
+                        </td>
+                        <td>
+                            {{ (invoice_line.rate/100)|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
+                            {{ 'format.currency'|trans({}, 'general') }}
+                        </td>
+                        <td>
+                            {{ invoice_line.quantity }}
+                        </td>
+                        <td>
+                            {{ invoice_line.discount }} %
+                        </td>
+                        <td>
+                            {% set subtotal = invoice_line.rate * (100 - invoice_line.discount) * invoice_line.quantity / 10000 %}
+                            {% set total = total + subtotal %}
+                            {{ subtotal|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
+                            {{ 'format.currency'|trans({}, 'general') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="7"></th>
+                    <th>{{ total|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
+                        {{ 'format.currency'|trans({}, 'general') }}</th>
+                </tr>
+            </tfoot>
+        </table>
+    {% endif %}
+
+    {% if not new %}
+        {{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}
+        {{ m.submit_button('finalize', 'thumbs-up', 'btn-primary', 'form.finalize'|trans, invoice.finalizedOn is not null) }}
+    {% endif %}
+
+    {{ form_end(form, {'render_rest': false}) }}
+
+    {% if invoice.finalizedOn is null %}
+    <div class="mt-3 card">
+        <h5 class="card-header">{{ 'title.add_line'|trans }}</h5>
+        <div class="card-body">
+            {{ form_start(form_line) }}
+            {{ form_widget(form_line) }}
+            {{ m.start_button() }}
+            {% if new %}{{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}{% endif %}
+            {{ m.submit_button('submit', 'check', 'btn-success', 'form.line.add'|trans) }}
+            {{ m.end_button() }}
+            {{ form_end(form_line) }}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

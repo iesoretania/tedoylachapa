@@ -1,6 +1,9 @@
 menu.frontpage: Portada
 menu.sections: Secciones
 
+menu.invoice: Pedidos
+menu.invoice.detail: Gestionar pedidos
+
 menu.user: Usuarios
 menu.user.detail: Administrar usuarios de la aplicación
 

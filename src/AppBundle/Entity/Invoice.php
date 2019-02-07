@@ -64,11 +64,17 @@ class Invoice
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
+    private $finishedOn;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
     private $servedOn;
 
     /**
      * @ORM\OneToMany(targetEntity="InvoiceLine", mappedBy="invoice")
-     * @ORM\OrderBy({"order":"ASC"})
+     * @ORM\OrderBy({"orderNr":"ASC"})
      * @var InvoiceLine[]
      */
     private $lines;
@@ -85,6 +91,14 @@ class Invoice
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->dateTime->format('Y') . '/' . $this->getId();
     }
 
     /**
@@ -156,6 +170,24 @@ class Invoice
     public function setFinalizedOn(\DateTime $finalizedOn = null)
     {
         $this->finalizedOn = $finalizedOn;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getFinishedOn()
+    {
+        return $this->finishedOn;
+    }
+
+    /**
+     * @param \DateTime $finishedOn
+     * @return Invoice
+     */
+    public function setFinishedOn(\DateTime $finishedOn = null)
+    {
+        $this->finishedOn = $finishedOn;
         return $this;
     }
 

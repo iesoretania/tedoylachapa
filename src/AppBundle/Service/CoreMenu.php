@@ -77,6 +77,17 @@ class CoreMenu implements MenuBuilderInterface
 
         $menu = new MenuItem();
         $menu
+            ->setName('invoice')
+            ->setRouteName('invoice')
+            ->setCaption('menu.invoice')
+            ->setDescription('menu.invoice.detail')
+            ->setIcon('file-invoice')
+            ->setPriority(0);
+
+        $root[] = $menu;
+
+        $menu = new MenuItem();
+        $menu
             ->setName('personal_data')
             ->setRouteName('personal_data')
             ->setCaption('menu.personal_data')

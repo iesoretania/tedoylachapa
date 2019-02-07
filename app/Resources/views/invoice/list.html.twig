@@ -1,0 +1,51 @@
+{% trans_default_domain 'invoice' %}
+{% extends 'generic/list.html.twig' %}
+{% import 'macros.html.twig' as m %}
+
+{% block path_new %}{{ path('invoice_form_new') }}{% endblock %}
+
+{% block table_header %}
+    <th><label><input type="checkbox" id="select"> {{ 'header.code'|trans }}</label></th>
+    <th>{{ 'header.date_time'|trans }}</th>
+    <th>{{ 'header.created_by'|trans }}</th>
+    <th>{{ 'header.state'|trans }}</th>
+    <th>{{ 'header.notes'|trans }}</th>
+{% endblock %}
+
+{% block table_body %}
+            {% for item in pager %}
+                {% set url = path('invoice_form_edit', {'id': item.id}) %}
+                <tr class="clickable-row" data-href="{{ url }}">
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.dateTime|date('format.datetime'|trans({}, 'general')) }}</td>
+                    <td>{{ item.createdBy }}</td>
+                    <td>
+                        {% if not item.finalizedOn %}
+                            {{ 'table.not_finalized'|trans }}
+                        {% elseif not item.finishedOn %}
+                            {{ 'table.not_finished'|trans }} {{ item.finalizedOn|date('format.datetime'|trans({}, 'general')) }}
+                        {% elseif not item.servedOn %}
+                            {{ 'table.not_served'|trans }} {{ item.finishedOn|date('format.datetime'|trans({}, 'general')) }}
+                        {% else %}
+                            {{ 'table.served'|trans }} {{ item.servedOn|date('format.datetime'|trans({}, 'general')) }}
+                        {% endif %}
+                    </td>
+                    <td>{{ item.notes | nl2br }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">{{ 'table.no_items'|trans }}</td>
+                </tr>
+            {% endfor %}
+{% endblock %}
+
+{% block before_table %}
+    <form action="{{ path('invoice_delete') }}" method="post">
+{% endblock %}
+
+{% block after_table %}
+        <div class="clearfix"></div>
+        {{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}
+        {{ m.submit_button('delete', 'trash', 'btn-danger enable-on-items', 'form.delete'|trans) }}
+    </form>
+{% endblock %}

@@ -65,6 +65,11 @@ class Model
         $this->active = true;
     }
 
+    public function __toString()
+    {
+        return $this->getCode() . ' - ' . $this->getDescription();
+    }
+
     /**
      * @return int
      */

@@ -1,0 +1,66 @@
+form.date_time: Fecha y hora
+form.notes: Notas
+form.created_by: Registrado por
+form.finalized_on: Fecha de cierre del pedido
+form.finished_on: Fecha de fin de fabricación
+form.served_on: Fecha de entrega
+
+form.line.reference: Referencia
+form.line.model: Modelo
+form.line.description: Descripción
+form.line.rate: Precio/ud.
+form.line.quantity: Unidades
+form.line.discount: Descuento
+
+form.line.no_reference: Sin referencia
+form.line.no_model: Sin especificar
+
+form.save: Guardar cambios
+form.delete: Eliminar pedidos seleccionados
+form.back: Volver
+form.delete_confirm: Confirmar borrado
+form.finalize: Cerrar y tramitar pedido
+form.line.add: Añadir línea
+
+prompt.delete_confirm: |
+  ¿Está seguro de que desea eliminar los siguientes pedidos?
+
+  Esta operación no se puede deshacer.
+
+message.saved: Datos actualizados con éxito.
+message.error: No se han podido guardar los cambios.
+message.deleted: Los pedidos han sido eliminadas con éxito.
+message.delete_error: No se han podido eliminar los pedidos seleccionados.
+
+title.new: Nuevo pedido
+title.edit: Detalles del pedido
+title.delete: Eliminar pedidos
+
+title.add_line: Añadir línea al pedido
+
+title.list: Listado de pedidos
+table.total: "{1} Encontrado un único resultado|]1,Inf[ Encontrados %count% resultados"
+table.no_items: No hay pedidos
+table.new: Nuevo pedido
+table.filter: Filtrar...
+
+header.code: Núm.
+header.date_time: Fecha
+header.created_by: Creado por
+header.state: Estado
+header.notes: Notas
+header.total: Total
+
+header.line.code: Código
+header.line.reference: Referencia
+header.line.model: Modelo
+header.line.description: Concepto
+header.line.rate: Precio/ud.
+header.line.quantity: Unidades
+header.line.discount: Descuento
+header.line.total: Total
+
+table.not_finalized: No está cerrado
+table.not_finished: Pendiente de fabricación. Se cerró el
+table.not_served: Pendiente de entrega. Se fabricó el
+table.served: Servido el
