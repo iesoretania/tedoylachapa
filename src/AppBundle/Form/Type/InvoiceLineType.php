@@ -21,6 +21,8 @@ namespace AppBundle\Form\Type;
 use AppBundle\Entity\InvoiceLine;
 use AppBundle\Entity\Model;
 use AppBundle\Entity\Reference;
+use AppBundle\Repository\ModelRepository;
+use AppBundle\Repository\ReferenceRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -41,12 +43,24 @@ class InvoiceLineType extends AbstractType
                 'label' => 'form.line.reference',
                 'class' => Reference::class,
                 'placeholder' => 'form.line.no_reference',
+                'query_builder' => function (ReferenceRepository $referenceRepository) {
+                    return $referenceRepository->createQueryBuilder('r')
+                        ->where('r.active = :active')
+                        ->setParameter('active', 1)
+                        ->orderBy('r.code');
+                },
                 'required' => false
             ])
             ->add('model', EntityType::class, [
                 'label' => 'form.line.model',
                 'class' => Model::class,
                 'placeholder' => 'form.line.no_model',
+                'query_builder' => function (ModelRepository $modelRepository) {
+                    return $modelRepository->createQueryBuilder('m')
+                        ->where('m.active = :active')
+                        ->setParameter('active', 1)
+                        ->orderBy('m.code');
+                },
                 'required' => false
             ])
             ->add('description', TextType::class, [
