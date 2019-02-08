@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new SimpleThings\EntityAudit\SimpleThingsEntityAuditBundle(),
+            new TFox\MpdfPortBundle\TFoxMpdfPortBundle(),
             new AppBundle\AppBundle(),
         ];
 
