@@ -16,7 +16,6 @@
                         <th>{{ 'header.date_time'|trans }}</th>
                         <th>{{ 'header.created_by'|trans }}</th>
                         <th>{{ 'header.state'|trans }}</th>
-                        <th>{{ 'header.notes'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,7 +35,6 @@
                                     {{ 'table.served'|trans }} {{ item.servedOn|date('format.datetime'|trans({}, 'general')) }}
                                 {% endif %}
                             </td>
-                            <td>{{ notes }}|nl2br</td>
                         </tr>
                     {% endfor %}
                 </tbody>

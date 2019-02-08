@@ -48,6 +48,7 @@ header.code: Núm.
 header.date_time: Fecha
 header.created_by: Creado por
 header.state: Estado
+header.lines: Líneas
 header.notes: Notas
 header.total: Total
 

@@ -33,9 +33,10 @@ class InvoiceRepository extends ServiceEntityRepository
      * @param $items
      * @return Invoice[]
      */
-    public function findAllInListById($items) {
+    public function findNotFinalizedInListById($items) {
         return $this->createQueryBuilder('i')
             ->where('i.id IN (:items)')
+            ->andWhere('i.finalizedOn IS NULL')
             ->setParameter('items', $items)
             ->orderBy('i.dateTime', 'DESC')
             ->getQuery()
@@ -49,6 +50,9 @@ class InvoiceRepository extends ServiceEntityRepository
     {
         // se hace así en lugar de en bloque para que pueda auditarse el borrado
         foreach ($list as $item) {
+            foreach ($item->getLines() as $line) {
+                $this->getEntityManager()->remove($line);
+            }
             $this->getEntityManager()->remove($item);
         }
     }

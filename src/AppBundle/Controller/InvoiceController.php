@@ -167,7 +167,7 @@ class InvoiceController extends Controller
             return $this->redirectToRoute('invoice');
         }
 
-        $items = $invoiceRepository->findAllInListById($items);
+        $items = $invoiceRepository->findNotFinalizedInListById($items);
 
         if ($request->get('confirm', '') === 'ok') {
             try {
