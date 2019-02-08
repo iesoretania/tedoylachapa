@@ -9,10 +9,10 @@ parameters:
     database_host:     db
     database_port:     ~
     # Nombre por defecto del schema o base de datos
-    database_name:     aticafp
+    database_name:     chapa
     # Nombre y contraseña del usuario que accederá a la base de datos. ¡No usar "root" en producción!
-    database_user:     atica
-    database_password: atica
+    database_user:     chapa
+    database_password: chapa
     # Si vas a usar SQLite, deberías modificar la línea siguiente para indicar donde almacenar la base de datos
     # database_path: "%kernel.root_dir%/data.db3"
 
