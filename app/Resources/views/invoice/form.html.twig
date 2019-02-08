@@ -72,7 +72,13 @@
 
     {% if not new %}
         {{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}
-        {{ m.submit_button('finalize', 'lock', 'btn-primary', 'form.finalize'|trans, invoice.finalizedOn is not null) }}
+        {% if invoice.finalizedOn is null %}
+            {{ m.submit_button('finalize', 'lock', 'btn-primary', 'form.finalize'|trans, false, '', true) }}
+        {% elseif invoice.finishedOn is null %}
+            {{ m.submit_button('finish', 'industry', 'btn-primary', 'form.finish'|trans, false, '', true) }}
+        {% elseif invoice.servedOn is null %}
+            {{ m.submit_button('serve', 'hand-holding', 'btn-primary', 'form.serve'|trans, false, '', true) }}
+        {% endif %}
     {% endif %}
 
     {{ form_end(form_line, {'render_rest': false}) }}

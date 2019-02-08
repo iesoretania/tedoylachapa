@@ -73,15 +73,42 @@ class InvoiceController extends Controller
 
         $formLine->handleRequest($request);
 
-        if ($formLine->isSubmitted() && $formLine->isValid()) {
+        if ($request->getMethod() === 'POST' && (!$formLine->isSubmitted() || ($formLine->isSubmitted() && $formLine->isValid()))) {
             try {
-                if ($request->get('finalize', null) === '') {
+                $returnToList = false;
+                if (!$invoice->getFinalizedOn() && $request->get('finalize', null) === '') {
                     $invoice->setFinalizedOn(new \DateTime());
                     $em->remove($invoiceLine);
+                    $returnToList = true;
                 }
+
+                if ($invoice->getFinalizedOn() &&
+                    !$invoice->getFinishedOn() &&
+                    $request->get('finish', null) === '') {
+                    $invoice->setFinishedOn(new \DateTime());
+
+                    // quitar del stock
+                    foreach ($invoice->getLines() as $line) {
+                        $reference = $line->getReference();
+                        if ($reference) {
+                            $reference->setStock($reference->getStock() - $line->getQuantity());
+                        }
+                    }
+                    $em->remove($invoiceLine);
+                    $returnToList = true;
+                }
+
+                if ($invoice->getFinalizedOn() &&
+                    $invoice->getFinishedOn() &&
+                    !$invoice->getServedOn() &&
+                    $request->get('serve', null) === '') {
+                    $invoice->setServedOn(new \DateTime());
+                    $em->remove($invoiceLine);
+                }
+
                 $em->flush();
                 $this->addFlash('success', $translator->trans('message.saved', [], 'invoice'));
-                if ($request->get('finalize', null) === '') {
+                if ($returnToList) {
                     return $this->redirectToRoute('invoice');
                 }
                 return $this->redirectToRoute('invoice_form_edit', ['id' => $invoice->getId()]);

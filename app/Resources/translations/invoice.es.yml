@@ -20,6 +20,8 @@ form.delete: Eliminar pedidos seleccionados
 form.back: Volver
 form.delete_confirm: Confirmar borrado
 form.finalize: Cerrar y tramitar pedido
+form.finish: Marcar como fabricado
+form.serve: Marcar como entregado al cliente
 form.line.add: Añadir línea
 
 prompt.delete_confirm: |
