@@ -37,6 +37,7 @@
                             {{ invoice_line.discount }} %
                         </td>
                         <td class="text-right">
+                            {% if invoice.finalizedOn is null %}<a href="{{ path('invoice_line_form_edit', {'id': invoice_line.id}) }}"><i class="fa fa-pen"></i></a>{% endif %}
                             {% set subtotal = invoice_line.rate * (100 - invoice_line.discount) * invoice_line.quantity / 10000 %}
                             {% set total = total + subtotal %}
                             {{ subtotal|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}

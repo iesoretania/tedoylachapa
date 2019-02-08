@@ -216,4 +216,63 @@ class InvoiceController extends Controller
             'items' => $items
         ]);
     }
+
+    /**
+     * @Route("/linea/{id}", name="invoice_line_form_edit", methods={"GET", "POST"})
+     */
+    public function indexLineAction(Request $request, TranslatorInterface $translator, InvoiceLine $invoiceLine)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $invoice = $invoiceLine->getInvoice();
+        $readOnly = $invoice->getFinishedOn() !== null;
+        $form = $this->createForm(InvoiceLineType::class, $invoiceLine, [
+            'disabled' => $readOnly
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                if (!$readOnly && $request->get('delete', null) === '') {
+                    $em->remove($invoiceLine);
+                    $em->flush();
+
+                    // renumerar las líneas
+                    $n = 1;
+                    foreach ($invoice->getLines() as $line) {
+                        $line->setOrderNr($n++);
+                    }
+                }
+                $em->flush();
+                $this->addFlash('success', $translator->trans('message.saved', [], 'invoice'));
+                return $this->redirectToRoute('invoice_form_edit', ['id' => $invoice->getId()]);
+            } catch (\Exception $e) {
+                $this->addFlash('error', $translator->trans('message.error', [], 'invoice'));
+            }
+        }
+
+        $title = $translator->trans('title.line.edit', [], 'invoice');
+
+        if ($invoiceLine->getId()) {
+            $title .= ' ' . $invoice->getCode();
+        }
+
+        $breadcrumb = [
+                [
+                    'fixed' => (string) $invoice->getCode(),
+                    'routeName' => 'invoice_form_edit',
+                    'routeParams' => ['id' => $invoice->getId()]
+                ],
+                ['fixed' => $translator->trans('title.line.edit', [], 'invoice')]
+        ];
+
+        return $this->render('invoice/line_form.html.twig', [
+            'menu_path' => 'invoice',
+            'breadcrumb' => $breadcrumb,
+            'title' => $title,
+            'invoice' => $invoice,
+            'form' => $form->createView()
+        ]);
+    }
 }

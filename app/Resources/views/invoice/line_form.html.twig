@@ -1,0 +1,20 @@
+{% trans_default_domain 'invoice' %}
+{% extends 'layout.html.twig' %}
+{% import 'macros.html.twig' as m %}
+{% block content %}
+    {{ form_start(form, {'attr': {'data-ajax': path('api_reference', {'id': 0})}}) }}
+    {{ form_widget(form) }}
+    {{ m.start_button() }}
+        {{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}
+        {% if invoice.finalizedOn is null %}
+            {{ m.submit_button('submit', 'check', 'btn-success', 'form.save'|trans) }}
+            {{ m.submit_button('delete', 'trash', 'btn-danger', 'form.line.delete'|trans) }}
+        {% endif %}
+    {{ m.end_button() }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/invoice_line.js') }}"></script>
+{% endblock %}
