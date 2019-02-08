@@ -79,6 +79,8 @@
             {{ m.submit_button('finish', 'industry', 'btn-primary', 'form.finish'|trans, false, '', true) }}
         {% elseif invoice.servedOn is null %}
             {{ m.submit_button('serve', 'hand-holding', 'btn-primary', 'form.serve'|trans, false, '', true) }}
+        {% else %}
+            {{ m.link_button(path('invoice_report', {'id': invoice.id}), 'print', 'btn-primary', 'form.print'|trans) }}
         {% endif %}
     {% endif %}
 

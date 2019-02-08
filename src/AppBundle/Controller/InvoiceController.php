@@ -30,6 +30,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
+use TFox\MpdfPortBundle\Service\MpdfService;
+use Twig\Environment;
 
 /**
  * @Route("/pedidos")
@@ -274,5 +276,22 @@ class InvoiceController extends Controller
             'invoice' => $invoice,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/informe/{id}", name="invoice_report", methods={"GET"})
+     */
+    public function reportAction(
+        TranslatorInterface $translator,
+        Environment $engine,
+        Invoice $invoice)
+    {
+        $mpdfService = new MpdfService();
+
+        $html = $engine->render('invoice/ticket_report.html.twig', [
+            'invoice' => $invoice
+        ]);
+
+        return $mpdfService->generatePdfResponse($html);
     }
 }

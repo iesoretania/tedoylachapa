@@ -1,0 +1,102 @@
+{% trans_default_domain 'invoice_ticket' %}
+<html>
+<head>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        table {
+            border-style: solid;
+            border-width: 1px;
+        }
+
+        table.data {
+            width: 40%;
+            margin-bottom: 10px;
+        }
+
+        table.lines {
+            margin-top: 60px;
+            width: 100%;
+        }
+
+        table.lines th {
+            background-color: #cccccc;
+        }
+
+        table.lines {
+            font-size: 80%;
+        }
+
+        table.lines  {
+            line-height: 2;
+        }
+
+        table.lines tfoot th {
+            font-size: 120%;
+        }
+
+        .right {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ app_name }}</h1>
+    <table class="data">
+        <tr>
+            <td>{{ 'report.code'|trans }}</td>
+            <td>{{ invoice.code }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'report.date'|trans }}</td>
+            <td>{{ invoice.servedOn|date('format.datetime'|trans({}, 'general')) }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'report.created_by'|trans }}</td>
+            <td>{{ invoice.createdBy }}</td>
+        </tr>
+    </table>
+
+    <table class="lines">
+        <thead>
+            <tr>
+                <th width="10%">{{ 'header.code'|trans }}</th>
+                <th width="50%">{{ 'header.description'|trans }}</th>
+                <th width="10%" class="right">{{ 'header.rate'|trans }}</th>
+                <th width="10%" class="right">{{ 'header.quantity'|trans }}</th>
+                <th width="10%" class="right">{{ 'header.discount'|trans }}</th>
+                <th width="10%" class="right">{{ 'header.total'|trans }}</th>
+            </tr>
+        </thead>
+        {% set total = 0 %}
+        {% for line in invoice.lines %}
+            <tr>
+                <td>{{ line.reference ? (line.reference.code ~ (line.model ? line.model.code)) }}</td>
+                <td>{{ line.description }}</td>
+                <td class="right">
+                    {{ (line.rate/100)|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
+                    {{ 'format.currency'|trans({}, 'general') }}
+                </td>
+                <td class="right">{{ line.quantity }}</td>
+                <td class="right">{{ line.discount }}</td>
+                <td class="right">
+                    {% set subtotal = line.rate * (100 - line.discount) * line.quantity / 10000 %}
+                    {% set total = total + subtotal %}
+                    {{ subtotal|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
+                    {{ 'format.currency'|trans({}, 'general') }}
+                </td>
+            </tr>
+        {% endfor %}
+        <tfoot>
+            <tr>
+                <th colspan="5"></th>
+                <th class="right">
+                    {{ total|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
+                    {{ 'format.currency'|trans({}, 'general') }}
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

@@ -22,6 +22,7 @@ form.delete_confirm: Confirmar borrado
 form.finalize: Cerrar y tramitar pedido
 form.finish: Marcar como fabricado
 form.serve: Marcar como entregado al cliente
+form.print: Imprimir ticket
 form.line.add: Añadir línea
 form.line.delete: Eliminar línea
 
