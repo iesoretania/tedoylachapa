@@ -2,11 +2,7 @@
 {% extends 'layout.html.twig' %}
 {% import 'macros.html.twig' as m %}
 {% block content %}
-
-    {{ form_start(form) }}
     {% if not new %}
-        {{ form_widget(form) }}
-
         <table id="list" class="table table-bordered table-hover table-striped table-sm">
             <thead>
             <tr>
@@ -14,10 +10,10 @@
                 <th>{{ 'header.line.reference'|trans }}</th>
                 <th>{{ 'header.line.model'|trans }}</th>
                 <th>{{ 'header.line.description'|trans }}</th>
-                <th>{{ 'header.line.rate'|trans }}</th>
-                <th>{{ 'header.line.quantity'|trans }}</th>
-                <th>{{ 'header.line.discount'|trans }}</th>
-                <th>{{ 'header.line.total'|trans }}</th>
+                <th class="text-right">{{ 'header.line.rate'|trans }}</th>
+                <th class="text-right">{{ 'header.line.quantity'|trans }}</th>
+                <th class="text-right">{{ 'header.line.discount'|trans }}</th>
+                <th class="text-right">{{ 'header.line.total'|trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -30,17 +26,17 @@
                         <td>
                             {{ invoice_line.description }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ (invoice_line.rate/100)|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
                             {{ 'format.currency'|trans({}, 'general') }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ invoice_line.quantity }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ invoice_line.discount }} %
                         </td>
-                        <td>
+                        <td class="text-right">
                             {% set subtotal = invoice_line.rate * (100 - invoice_line.discount) * invoice_line.quantity / 10000 %}
                             {% set total = total + subtotal %}
                             {{ subtotal|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
@@ -52,32 +48,37 @@
             <tfoot>
                 <tr>
                     <th colspan="7"></th>
-                    <th>{{ total|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
+                    <th class="text-right">{{ total|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
                         {{ 'format.currency'|trans({}, 'general') }}</th>
                 </tr>
             </tfoot>
         </table>
     {% endif %}
 
-    {% if not new %}
-        {{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}
-        {{ m.submit_button('finalize', 'thumbs-up', 'btn-primary', 'form.finalize'|trans, invoice.finalizedOn is not null) }}
-    {% endif %}
-
-    {{ form_end(form, {'render_rest': false}) }}
+    {{ form_start(form_line, {'attr': {'data-ajax': path('api_reference', {'id': 0})}}) }}
 
     {% if invoice.finalizedOn is null %}
-    <div class="mt-3 card">
+    <div class="mb-3 card">
         <h5 class="card-header">{{ 'title.add_line'|trans }}</h5>
         <div class="card-body">
-            {{ form_start(form_line) }}
             {{ form_widget(form_line) }}
             {{ m.start_button() }}
             {% if new %}{{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}{% endif %}
             {{ m.submit_button('submit', 'check', 'btn-success', 'form.line.add'|trans) }}
             {{ m.end_button() }}
-            {{ form_end(form_line) }}
         </div>
     </div>
     {% endif %}
+
+    {% if not new %}
+        {{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}
+        {{ m.submit_button('finalize', 'lock', 'btn-primary', 'form.finalize'|trans, invoice.finalizedOn is not null) }}
+    {% endif %}
+
+    {{ form_end(form_line, {'render_rest': false}) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/invoice_line.js') }}"></script>
 {% endblock %}

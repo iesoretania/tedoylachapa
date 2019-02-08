@@ -19,9 +19,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Model;
+use AppBundle\Entity\Reference;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -43,5 +45,18 @@ class ApiController extends Controller
         $response = new StreamedResponse($callback);
         $response->headers->set('Content-Type', 'image/png');
         return $response;
+    }
+
+    /**
+     * @Route("/reference/{id}", name="api_reference", methods={"GET"})
+     */
+    public function referenceAction(Reference $reference)
+    {
+        $data = [
+            'description' => $reference->getDescription(),
+            'price' => $reference->getPrice()
+        ];
+
+        return new JsonResponse($data);
     }
 }

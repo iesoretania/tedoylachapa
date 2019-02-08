@@ -21,7 +21,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Invoice;
 use AppBundle\Entity\InvoiceLine;
 use AppBundle\Form\Type\InvoiceLineType;
-use AppBundle\Form\Type\InvoiceType;
 use AppBundle\Repository\InvoiceRepository;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -60,8 +59,6 @@ class InvoiceController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(InvoiceType::class, $invoice);
-
         $invoiceLine = new InvoiceLine();
         $invoiceLine
             ->setInvoice($invoice)
@@ -74,11 +71,9 @@ class InvoiceController extends Controller
 
         $formLine = $this->createForm(InvoiceLineType::class, $invoiceLine);
 
-        $form->handleRequest($request);
         $formLine->handleRequest($request);
 
-        if (($form->isSubmitted() && $form->isValid()) ||
-            ($formLine->isSubmitted() && $formLine->isValid())) {
+        if ($formLine->isSubmitted() && $formLine->isValid()) {
             try {
                 if ($request->get('finalize', null) === '') {
                     $invoice->setFinalizedOn(new \DateTime());
@@ -97,6 +92,10 @@ class InvoiceController extends Controller
 
         $title = $translator->trans($invoice->getId() ? 'title.edit' : 'title.new', [], 'invoice');
 
+        if ($invoice->getId()) {
+            $title .= ' ' . $invoice->getCode();
+        }
+
         $breadcrumb = [
             $invoice->getId() ?
                 ['fixed' => (string) $invoice->getCode()] :
@@ -107,7 +106,6 @@ class InvoiceController extends Controller
             'menu_path' => 'invoice',
             'breadcrumb' => $breadcrumb,
             'title' => $title,
-            'form' => $form->createView(),
             'form_line' => $formLine->createView(),
             'invoice' => $invoice,
             'new' => $invoice->getId() === null
