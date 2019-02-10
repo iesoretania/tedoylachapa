@@ -19,7 +19,7 @@
             <tbody>
                 {% set total = 0 %}
                 {% for invoice_line in invoice.lines %}
-                    <tr>
+                    <tr {% if invoice_line.reference and invoice_line.reference.stock < invoice_line.quantity %} class="text-danger"{% endif %}>
                         <td>{{ invoice_line.reference ? (invoice_line.reference.code ~ (invoice_line.model ? invoice_line.model.code)) }}</td>
                         <td>{% if invoice_line.reference %}{{ invoice_line.reference.description }}{% endif %}</td>
                         <td>{% if invoice_line.model %}{{ invoice_line.model.description }}{% endif %}</td>
@@ -31,7 +31,7 @@
                             {{ 'format.currency'|trans({}, 'general') }}
                         </td>
                         <td class="text-right">
-                            {{ invoice_line.quantity }}
+                            {{ invoice_line.quantity }}{% if invoice_line.reference and invoice_line.reference.stock < invoice_line.quantity %} <i class="fas fa-exclamation-triangle"></i>{% endif %}
                         </td>
                         <td class="text-right">
                             {{ invoice_line.discount }} %
