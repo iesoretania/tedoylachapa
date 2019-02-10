@@ -26,6 +26,12 @@ form.print: Imprimir ticket
 form.line.add: Añadir línea
 form.line.delete: Eliminar línea
 
+form.filter.all: Mostrar todo
+form.filter.opened: No cerrados
+form.filter.finalized: Cerrados, no fabricados
+form.filter.finished: Fabricados, no entregados
+form.filter.served: Servidos
+
 prompt.delete_confirm: |
   ¿Está seguro de que desea eliminar los siguientes pedidos?
 
@@ -51,7 +57,7 @@ table.filter: Filtrar...
 
 header.code: Núm.
 header.date_time: Fecha
-header.created_by: Creado por
+header.created_by: Añadido por
 header.state: Estado
 header.lines: Líneas
 header.notes: Notas

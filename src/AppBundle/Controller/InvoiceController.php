@@ -152,9 +152,10 @@ class InvoiceController extends Controller
 
         $queryBuilder
             ->select('i')
+            ->addSelect('u')
             ->from(Invoice::class, 'i')
             ->join('i.createdBy', 'u')
-            ->orderBy('i.createdBy', 'DESC');
+            ->orderBy('i.dateTime', 'DESC');
 
         $q = $request->get('q', null);
         if ($q) {
@@ -163,6 +164,31 @@ class InvoiceController extends Controller
                 ->orWhere('u.lastName LIKE :tq')
                 ->orWhere('i.notes LIKE :tq')
                 ->setParameter('tq', '%'.$q.'%');
+        }
+
+        $f = $request->get('f', 0);
+        switch ($f) {
+            case 1:
+                $queryBuilder
+                    ->andWhere('i.finalizedOn IS NULL');
+                break;
+            case 2:
+                $queryBuilder
+                    ->andWhere('i.finalizedOn IS NOT NULL')
+                    ->andWhere('i.finishedOn IS NULL');
+                break;
+            case 3:
+                $queryBuilder
+                    ->andWhere('i.finalizedOn IS NOT NULL')
+                    ->andWhere('i.finishedOn IS NOT NULL')
+                    ->andWhere('i.servedOn IS NULL');
+                break;
+            case 4:
+                $queryBuilder
+                    ->andWhere('i.finalizedOn IS NOT NULL')
+                    ->andWhere('i.finishedOn IS NOT NULL')
+                    ->andWhere('i.servedOn IS NOT NULL');
+                break;
         }
 
         $adapter = new DoctrineORMAdapter($queryBuilder, false);
@@ -177,6 +203,7 @@ class InvoiceController extends Controller
             'title' => $title,
             'pager' => $pager,
             'q' => $q,
+            'f' => $f,
             'domain' => 'invoice'
         ]);
     }
