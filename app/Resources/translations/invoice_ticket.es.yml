@@ -1,6 +1,6 @@
-report.code: Nº de documento
-report.date: Fecha
-report.created_by: Atendido por
+report.code: "Nº de documento:"
+report.date: "Fecha:"
+report.created_by: "Atendido por:"
 header.code: Código
 header.description: Descripción
 header.rate: Precio/ud.

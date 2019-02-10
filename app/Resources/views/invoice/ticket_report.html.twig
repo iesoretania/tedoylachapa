@@ -5,14 +5,22 @@
         body {
             font-family: sans-serif;
         }
+
         table {
+            font-family: dejavusanscondensed, sans-serif;
             border-style: solid;
             border-width: 1px;
         }
 
         table.data {
-            width: 40%;
+            width: 50%;
             margin-bottom: 10px;
+        }
+
+        table.data td.info {
+            font-family: dejavusanscondensed, sans-serif;
+            font-weight: bold;
+            text-align: right;
         }
 
         table.lines {
@@ -45,15 +53,15 @@
     <h1>{{ app_name }}</h1>
     <table class="data">
         <tr>
-            <td>{{ 'report.code'|trans }}</td>
+            <td class="info">{{ 'report.code'|trans }}</td>
             <td>{{ invoice.code }}</td>
         </tr>
         <tr>
-            <td>{{ 'report.date'|trans }}</td>
+            <td class="info">{{ 'report.date'|trans }}</td>
             <td>{{ invoice.servedOn|date('format.datetime'|trans({}, 'general')) }}</td>
         </tr>
         <tr>
-            <td>{{ 'report.created_by'|trans }}</td>
+            <td class="info">{{ 'report.created_by'|trans }}</td>
             <td>{{ invoice.createdBy }}</td>
         </tr>
     </table>
