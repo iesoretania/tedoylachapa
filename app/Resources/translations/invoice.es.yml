@@ -61,6 +61,7 @@ header.created_by: Añadido por
 header.state: Estado
 header.lines: Líneas
 header.notes: Notas
+header.quantity: Uds.
 header.total: Total
 
 header.line.code: Código

@@ -152,9 +152,13 @@ class InvoiceController extends Controller
 
         $queryBuilder
             ->select('i')
+            ->addSelect('SUM(il.quantity)')
+            ->addSelect('SUM(il.quantity * il.rate * (100 - il.discount) / 100)')
             ->addSelect('u')
             ->from(Invoice::class, 'i')
+            ->join('i.lines', 'il')
             ->join('i.createdBy', 'u')
+            ->groupBy('i')
             ->orderBy('i.dateTime', 'DESC');
 
         $q = $request->get('q', null);

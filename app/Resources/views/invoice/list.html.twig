@@ -9,11 +9,13 @@
     <th>{{ 'header.date_time'|trans }}</th>
     <th>{{ 'header.created_by'|trans }}</th>
     <th>{{ 'header.state'|trans }}</th>
-    <th>{{ 'header.lines'|trans }}</th>
+    <th class="text-right">{{ 'header.quantity'|trans }}</th>
+    <th class="text-right">{{ 'header.total'|trans }}</th>
 {% endblock %}
 
 {% block table_body %}
-            {% for item in pager %}
+            {% for row in pager %}
+                {% set item = row[0] %}
                 {% set url = path('invoice_form_edit', {'id': item.id}) %}
                 <tr class="clickable-row" data-href="{{ url }}">
                     <td><label><input type="checkbox" name="items[]" value="{{ item.id }}" {% if item.finalizedOn %}disabled="disabled"{% else %}class="selectable"{% endif %}> <a href="{{ url }}">{{ item.code }}</a></label></td>
@@ -30,11 +32,15 @@
                             {{ 'table.served'|trans }} {{ item.servedOn|date('format.datetime'|trans({}, 'general')) }}
                         {% endif %}
                     </td>
-                    <td>{{ item.lines|length }}</td>
+                    <td class="text-right">{{ row[1] }}</td>
+                    <td class="text-right">
+                        {{ (row[2]/100)|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
+                        {{ 'format.currency'|trans({}, 'general') }}
+                    </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="5">{{ 'table.no_items'|trans }}</td>
+                    <td colspan="6">{{ 'table.no_items'|trans }}</td>
                 </tr>
             {% endfor %}
 {% endblock %}
