@@ -7,10 +7,10 @@
 {% block table_header %}
     <th><label><input type="checkbox" id="select"> {{ 'header.code'|trans }}</label></th>
     <th>{{ 'header.description'|trans }}</th>
-    <th>{{ 'header.price'|trans }}</th>
-    <th>{{ 'header.stock'|trans }}</th>
-    <th>{{ 'header.minimum_stock'|trans }}</th>
-    <th>{{ 'header.active'|trans }}</th>
+    <th class="text-right">{{ 'header.price'|trans }}</th>
+    <th class="text-right">{{ 'header.stock'|trans }}</th>
+    <th class="text-right">{{ 'header.minimum_stock'|trans }}</th>
+    <th class="text-right">{{ 'header.active'|trans }}</th>
 {% endblock %}
 
 {% block table_body %}
@@ -24,17 +24,17 @@
                     <td>
                         {{ reference.description }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ (reference.price/100)|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
                         {{ 'format.currency'|trans({}, 'general') }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ reference.stock }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ reference.minimumStock }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{ (reference.active ? 'table.active.yes' : 'table.active.no')|trans }}
                     </td>
                 </tr>
