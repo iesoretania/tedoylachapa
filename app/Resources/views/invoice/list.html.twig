@@ -4,6 +4,8 @@
 
 {% block path_new %}{{ path('invoice_form_new') }}{% endblock %}
 
+{% block new_action %}{% if is_granted('ROLE_SALES_REPRESENTATIVE') %}{{ parent() }}{% endif %}{% endblock %}
+
 {% block table_header %}
     <th><label><input type="checkbox" id="select"> {{ 'header.code'|trans }}</label></th>
     <th>{{ 'header.date_time'|trans }}</th>
@@ -14,11 +16,12 @@
 {% endblock %}
 
 {% block table_body %}
+            {% set disable_checkboxes = not is_granted('ROLE_SALES_REPRESENTATIVE') %}
             {% for row in pager %}
                 {% set item = row[0] %}
                 {% set url = path('invoice_form_edit', {'id': item.id}) %}
                 <tr class="clickable-row" data-href="{{ url }}">
-                    <td><label><input type="checkbox" name="items[]" value="{{ item.id }}" {% if item.finalizedOn %}disabled="disabled"{% else %}class="selectable"{% endif %}> <a href="{{ url }}">{{ item.code }}</a></label></td>
+                    <td><label><input type="checkbox" name="items[]" value="{{ item.id }}" {% if disable_checkboxes or item.finalizedOn %}disabled="disabled"{% else %}class="selectable"{% endif %}> <a href="{{ url }}">{{ item.code }}</a></label></td>
                     <td>{{ item.dateTime|date('format.datetime'|trans({}, 'general')) }}</td>
                     <td>{{ item.createdBy }}</td>
                     <td>
@@ -70,6 +73,6 @@
 {% block after_table %}
         <div class="clearfix"></div>
         {{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}
-        {{ m.submit_button('delete', 'trash', 'btn-danger enable-on-items', 'form.delete'|trans) }}
+        {% if is_granted('ROLE_SALES_REPRESENTATIVE') %}{{ m.submit_button('delete', 'trash', 'btn-danger enable-on-items', 'form.delete'|trans) }}{% endif %}
     </form>
 {% endblock %}

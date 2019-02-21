@@ -58,7 +58,7 @@
 
     {{ form_start(form_line, {'attr': {'data-ajax': path('api_reference', {'id': 0})}}) }}
 
-    {% if invoice.finalizedOn is null %}
+    {% if invoice.finalizedOn is null and is_granted('ROLE_SALES_REPRESENTATIVE') %}
     <div class="mb-3 card">
         <h5 class="card-header">{{ 'title.add_line'|trans }}</h5>
         <div class="card-body">
@@ -74,11 +74,11 @@
     {% if not new %}
         {{ m.link_button(last_url, 'arrow-left', 'btn-info', 'form.back'|trans) }}
         {% if invoice.finalizedOn is null %}
-            {{ m.submit_button('finalize', 'lock', 'btn-primary', 'form.finalize'|trans, false, '', true) }}
+            {% if is_granted('ROLE_SALES_REPRESENTATIVE') %}{{ m.submit_button('finalize', 'lock', 'btn-primary', 'form.finalize'|trans, false, '', true) }}{% endif %}
         {% elseif invoice.finishedOn is null %}
-            {{ m.submit_button('finish', 'industry', 'btn-primary', 'form.finish'|trans, false, '', true) }}
+            {% if is_granted('ROLE_MAKER') %}{{ m.submit_button('finish', 'industry', 'btn-primary', 'form.finish'|trans, false, '', true) }}{% endif %}
         {% elseif invoice.servedOn is null %}
-            {{ m.submit_button('serve', 'hand-holding', 'btn-primary', 'form.serve'|trans, false, '', true) }}
+            {% if is_granted('ROLE_MAKER') %}{{ m.submit_button('serve', 'hand-holding', 'btn-primary', 'form.serve'|trans, false, '', true) }}{% endif %}
         {% else %}
             {{ m.link_button(path('invoice_report', {'id': invoice.id}), 'print', 'btn-primary', 'form.print'|trans) }}
         {% endif %}

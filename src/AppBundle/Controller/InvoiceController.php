@@ -35,11 +35,11 @@ use Twig\Environment;
 
 /**
  * @Route("/pedidos")
- * @Security("is_granted('ROLE_ADMIN')")
  */
 class InvoiceController extends Controller
 {
     /**
+     * @Security("is_granted('ROLE_SALES_REPRESENTATIVE')")
      * @Route("/nuevo", name="invoice_form_new", methods={"GET", "POST"})
      */
     public function newAction(Request $request, TranslatorInterface $translator)
@@ -75,16 +75,18 @@ class InvoiceController extends Controller
 
         $formLine->handleRequest($request);
 
-        if ($request->getMethod() === 'POST' && (!$formLine->isSubmitted() || ($formLine->isSubmitted() && $formLine->isValid()))) {
+        if ($request->getMethod() === 'POST' &&
+            (!$formLine->isSubmitted() || ($formLine->isSubmitted() && $formLine->isValid()))) {
             try {
                 $returnToList = false;
-                if (!$invoice->getFinalizedOn() && $request->get('finalize', null) === '') {
+                if ($this->isGranted('ROLE_SALES_REPRESENTATIVE') &&
+                    !$invoice->getFinalizedOn() && $request->get('finalize', null) === '') {
                     $invoice->setFinalizedOn(new \DateTime());
                     $em->remove($invoiceLine);
                     $returnToList = true;
                 }
 
-                if ($invoice->getFinalizedOn() &&
+                if ($this->isGranted('ROLE_MAKER') && $invoice->getFinalizedOn() &&
                     !$invoice->getFinishedOn() &&
                     $request->get('finish', null) === '') {
                     $invoice->setFinishedOn(new \DateTime());
@@ -100,7 +102,8 @@ class InvoiceController extends Controller
                     $returnToList = true;
                 }
 
-                if ($invoice->getFinalizedOn() &&
+                if ($this->isGranted('ROLE_MAKER') &&
+                    $invoice->getFinalizedOn() &&
                     $invoice->getFinishedOn() &&
                     !$invoice->getServedOn() &&
                     $request->get('serve', null) === '') {
@@ -213,6 +216,7 @@ class InvoiceController extends Controller
     }
 
     /**
+     * @Security("is_granted('ROLE_SALES_REPRESENTATIVE')")
      * @Route("/eliminar", name="invoice_delete", methods={"POST"})
      */
     public function deleteAction(
@@ -251,6 +255,7 @@ class InvoiceController extends Controller
     }
 
     /**
+     * @Security("is_granted('ROLE_SALES_REPRESENTATIVE')")
      * @Route("/linea/{id}", name="invoice_line_form_edit", methods={"GET", "POST"})
      */
     public function indexLineAction(Request $request, TranslatorInterface $translator, InvoiceLine $invoiceLine)
