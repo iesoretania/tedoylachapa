@@ -13,7 +13,7 @@ security:
             algorithm: bcrypt
 
     role-hierarchy:
-        ROLE_ADMIN: [ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ADMIN: [ROLE_ALLOWED_TO_SWITCH, ROLE_MAKER, ROLE_SALES_REPRESENTATIVE]
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs

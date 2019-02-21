@@ -5,6 +5,8 @@ form.enabled: Acceso
 form.enabled.no: El acceso a la aplicación le está denegado
 form.enabled.yes: El acceso a la aplicación le está permitido
 form.administrator: El usuario puede administrar la aplicación
+form.sales_representative: El usuario puede crear pedidos
+form.maker: El usuario puede fabricar pedidos y entregarlos
 
 form.disconnect: Salir de la aplicación
 

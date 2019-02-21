@@ -75,6 +75,18 @@ class User implements AdvancedUserInterface
     private $administrator;
 
     /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     */
+    private $maker;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     */
+    private $salesRepresentative;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
@@ -97,6 +109,8 @@ class User implements AdvancedUserInterface
     {
         $this->enabled = true;
         $this->administrator = false;
+        $this->maker = false;
+        $this->salesRepresentative = false;
     }
 
     /**
@@ -210,6 +224,42 @@ class User implements AdvancedUserInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isMaker()
+    {
+        return $this->maker;
+    }
+
+    /**
+     * @param bool $maker
+     * @return User
+     */
+    public function setMaker($maker)
+    {
+        $this->maker = $maker;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSalesRepresentative()
+    {
+        return $this->salesRepresentative;
+    }
+
+    /**
+     * @param bool $salesRepresentative
+     * @return User
+     */
+    public function setSalesRepresentative($salesRepresentative)
+    {
+        $this->salesRepresentative = $salesRepresentative;
+        return $this;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getLastAccess()
@@ -318,6 +368,12 @@ class User implements AdvancedUserInterface
         $roles = ['ROLE_USER'];
         if ($this->isAdministrator()) {
             $roles[] = 'ROLE_ADMIN';
+        }
+        if ($this->isMaker()) {
+            $roles[] = 'ROLE_MAKER';
+        }
+        if ($this->isSalesRepresentative()) {
+            $roles[] = 'ROLE_SALES_REPRESENTATIVE';
         }
         return $roles;
     }

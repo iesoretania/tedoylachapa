@@ -79,6 +79,14 @@ class UserType extends AbstractType
                     'label' => 'form.administrator',
                     'required' => false,
                     'disabled' => $options['own']
+                ])
+                ->add('salesRepresentative', null, [
+                    'label' => 'form.sales_representative',
+                    'required' => false
+                ])
+                ->add('maker', null, [
+                    'label' => 'form.maker',
+                    'required' => false
                 ]);
         }
 
