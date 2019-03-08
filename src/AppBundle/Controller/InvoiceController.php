@@ -20,6 +20,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Invoice;
 use AppBundle\Entity\InvoiceLine;
+use AppBundle\Form\Type\InvoiceClientType;
 use AppBundle\Form\Type\InvoiceLineType;
 use AppBundle\Repository\InvoiceRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -71,54 +72,66 @@ class InvoiceController extends Controller
 
         $em->persist($invoiceLine);
 
+        $form = $this->createForm(InvoiceClientType::class, $invoice);
         $formLine = $this->createForm(InvoiceLineType::class, $invoiceLine);
 
         $formLine->handleRequest($request);
+        $form->handleRequest($request);
 
-        if ($request->getMethod() === 'POST' &&
-            (!$formLine->isSubmitted() || ($formLine->isSubmitted() && $formLine->isValid()))) {
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $returnToList = false;
-                if ($this->isGranted('ROLE_SALES_REPRESENTATIVE') &&
-                    !$invoice->getFinalizedOn() && $request->get('finalize', null) === '') {
-                    $invoice->setFinalizedOn(new \DateTime());
-                    $em->remove($invoiceLine);
-                    $returnToList = true;
-                }
-
-                if ($this->isGranted('ROLE_MAKER') && $invoice->getFinalizedOn() &&
-                    !$invoice->getFinishedOn() &&
-                    $request->get('finish', null) === '') {
-                    $invoice->setFinishedOn(new \DateTime());
-
-                    // quitar del stock
-                    foreach ($invoice->getLines() as $line) {
-                        $reference = $line->getReference();
-                        if ($reference) {
-                            $reference->setStock($reference->getStock() - $line->getQuantity());
-                        }
-                    }
-                    $em->remove($invoiceLine);
-                    $returnToList = true;
-                }
-
-                if ($this->isGranted('ROLE_MAKER') &&
-                    $invoice->getFinalizedOn() &&
-                    $invoice->getFinishedOn() &&
-                    !$invoice->getServedOn() &&
-                    $request->get('serve', null) === '') {
-                    $invoice->setServedOn(new \DateTime());
-                    $em->remove($invoiceLine);
-                }
-
+                $em->remove($invoiceLine);
                 $em->flush();
-                $this->addFlash('success', $translator->trans('message.saved', [], 'invoice'));
-                if ($returnToList) {
-                    return $this->redirectToRoute('invoice');
-                }
-                return $this->redirectToRoute('invoice_form_edit', ['id' => $invoice->getId()]);
+                $this->addFlash('success', $translator->trans('message.client_saved', [], 'invoice'));
             } catch (\Exception $e) {
-                $this->addFlash('error', $translator->trans('message.error', [], 'invoice'));
+                $this->addFlash('error', $translator->trans('message.client_error', [], 'invoice'));
+            }
+        } else {
+            if ($request->getMethod() === 'POST' &&
+                (!$formLine->isSubmitted() || ($formLine->isSubmitted() && $formLine->isValid()))) {
+                try {
+                    $returnToList = false;
+                    if ($this->isGranted('ROLE_SALES_REPRESENTATIVE') &&
+                        !$invoice->getFinalizedOn() && $request->get('finalize', null) === '') {
+                        $invoice->setFinalizedOn(new \DateTime());
+                        $em->remove($invoiceLine);
+                        $returnToList = true;
+                    }
+
+                    if ($this->isGranted('ROLE_MAKER') && $invoice->getFinalizedOn() &&
+                        !$invoice->getFinishedOn() &&
+                        $request->get('finish', null) === '') {
+                        $invoice->setFinishedOn(new \DateTime());
+
+                        // quitar del stock
+                        foreach ($invoice->getLines() as $line) {
+                            $reference = $line->getReference();
+                            if ($reference) {
+                                $reference->setStock($reference->getStock() - $line->getQuantity());
+                            }
+                        }
+                        $em->remove($invoiceLine);
+                        $returnToList = true;
+                    }
+
+                    if ($this->isGranted('ROLE_MAKER') &&
+                        $invoice->getFinalizedOn() &&
+                        $invoice->getFinishedOn() &&
+                        !$invoice->getServedOn() &&
+                        $request->get('serve', null) === '') {
+                        $invoice->setServedOn(new \DateTime());
+                        $em->remove($invoiceLine);
+                    }
+
+                    $em->flush();
+                    $this->addFlash('success', $translator->trans('message.saved', [], 'invoice'));
+                    if ($returnToList) {
+                        return $this->redirectToRoute('invoice');
+                    }
+                    return $this->redirectToRoute('invoice_form_edit', ['id' => $invoice->getId()]);
+                } catch (\Exception $e) {
+                    $this->addFlash('error', $translator->trans('message.error', [], 'invoice'));
+                }
             }
         }
 
@@ -138,6 +151,7 @@ class InvoiceController extends Controller
             'menu_path' => 'invoice',
             'breadcrumb' => $breadcrumb,
             'title' => $title,
+            'form' => $form->createView(),
             'form_line' => $formLine->createView(),
             'invoice' => $invoice,
             'new' => $invoice->getId() === null

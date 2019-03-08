@@ -4,6 +4,7 @@ form.created_by: Registrado por
 form.finalized_on: Fecha de cierre del pedido
 form.finished_on: Fecha de fin de fabricación
 form.served_on: Fecha de entrega
+form.client: Cliente
 
 form.line.reference: Referencia
 form.line.model: Modelo
@@ -16,6 +17,7 @@ form.line.no_reference: Sin referencia
 form.line.no_model: Sin especificar
 
 form.save: Guardar cambios
+form.client_save: Guardar nombre del cliente
 form.delete: Eliminar pedidos seleccionados
 form.back: Volver
 form.delete_confirm: Confirmar borrado
@@ -37,6 +39,8 @@ prompt.delete_confirm: |
 
   Esta operación no se puede deshacer.
 
+message.client_saved: Cliente actualizado con éxito.
+message.client_error: No se ha podido guardar el cliente.
 message.saved: Datos actualizados con éxito.
 message.error: No se han podido guardar los cambios.
 message.deleted: Los pedidos han sido eliminadas con éxito.
