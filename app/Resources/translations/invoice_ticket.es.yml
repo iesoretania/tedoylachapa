@@ -8,5 +8,5 @@ header.description: Descripción
 header.model: Modelo
 header.rate: Precio/ud.
 header.quantity: Uds.
-header.discount: "Dto. %"
+header.discount: "%Dto."
 header.total: Total

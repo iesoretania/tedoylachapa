@@ -13,7 +13,7 @@
         }
 
         table.data {
-            width: 50%;
+            width: 80%;
             margin-bottom: 10px;
         }
 
@@ -21,6 +21,10 @@
             font-family: dejavusanscondensed, sans-serif;
             font-weight: bold;
             text-align: right;
+        }
+
+        td.info {
+            width: 30%;
         }
 
         table.lines {
@@ -75,12 +79,12 @@
     <table class="lines">
         <thead>
             <tr>
-                <th width="10%">{{ 'header.code'|trans }}</th>
-                <th width="40%">{{ 'header.description'|trans }}</th>
-                <th width="10%">{{ 'header.model'|trans }}</th>
+                <th width="15%">{{ 'header.code'|trans }}</th>
+                <th width="36%">{{ 'header.description'|trans }}</th>
+                <th width="15%">{{ 'header.model'|trans }}</th>
                 <th width="10%" class="right">{{ 'header.rate'|trans }}</th>
-                <th width="10%" class="right">{{ 'header.quantity'|trans }}</th>
-                <th width="10%" class="right">{{ 'header.discount'|trans }}</th>
+                <th width="7%" class="right">{{ 'header.quantity'|trans }}</th>
+                <th width="7%" class="right">{{ 'header.discount'|trans }}</th>
                 <th width="10%" class="right">{{ 'header.total'|trans }}</th>
             </tr>
         </thead>
@@ -89,7 +93,7 @@
             <tr>
                 <td>{{ line.reference ? (line.reference.code ~ (line.model ? line.model.code)) }}</td>
                 <td>{{ line.description }}</td>
-                <td>{{ line.model|default('') }}</td>
+                <td>{{ line.model ? line.model.description : '' }}</td>
                 <td class="right">
                     {{ (line.rate/100)|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
                     {{ 'format.currency'|trans({}, 'general') }}
@@ -107,7 +111,7 @@
         <tfoot>
             <tr>
                 <th colspan="5"></th>
-                <th class="right">
+                <th colspan="2" class="right">
                     {{ total|number_format(2, 'format.decimal_separator'|trans({}, 'general'), 'format.thousand_separator'|trans({}, 'general')) }}
                     {{ 'format.currency'|trans({}, 'general') }}
                 </th>
