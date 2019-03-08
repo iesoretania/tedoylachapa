@@ -58,6 +58,7 @@ table.filter: Filtrar...
 header.code: Núm.
 header.date_time: Fecha
 header.created_by: Añadido por
+header.client: Cliente
 header.state: Estado
 header.lines: Líneas
 header.notes: Notas

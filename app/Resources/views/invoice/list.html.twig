@@ -10,6 +10,7 @@
     <th><label><input type="checkbox" id="select"> {{ 'header.code'|trans }}</label></th>
     <th>{{ 'header.date_time'|trans }}</th>
     <th>{{ 'header.created_by'|trans }}</th>
+    <th>{{ 'header.client'|trans }}</th>
     <th>{{ 'header.state'|trans }}</th>
     <th class="text-right">{{ 'header.quantity'|trans }}</th>
     <th class="text-right">{{ 'header.total'|trans }}</th>
@@ -24,6 +25,7 @@
                     <td><label><input type="checkbox" name="items[]" value="{{ item.id }}" {% if disable_checkboxes or item.finalizedOn %}disabled="disabled"{% else %}class="selectable"{% endif %}> <a href="{{ url }}">{{ item.code }}</a></label></td>
                     <td>{{ item.dateTime|date('format.datetime'|trans({}, 'general')) }}</td>
                     <td>{{ item.createdBy }}</td>
+                    <td>{{ item.client }}</td>
                     <td>
                         {% if not item.finalizedOn %}
                             {{ 'table.not_finalized'|trans }}
