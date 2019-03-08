@@ -79,6 +79,12 @@ class Invoice
      */
     private $lines;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    private $client;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -215,5 +221,23 @@ class Invoice
     public function getLines()
     {
         return $this->lines;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param string $client
+     * @return Invoice
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+        return $this;
     }
 }
